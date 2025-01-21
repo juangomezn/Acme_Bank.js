@@ -68,7 +68,16 @@ function consignar() {
             // Realizar la consignación
             cuenta.saldo += monto;
             alert(`Consignación exitosa. Nuevo saldo de la cuenta ${numeroCuenta}: $${cuenta.saldo}`);
-        }
+            movimientos.forEach((movimiento) => {
+                if (dinero.cta === movimiento.cta) {
+                    movimiento.movimientos.push({
+                        tipo: "consignacion",
+                        descripcion: `se ha consignado $${saldo}`,
+                        saldo: `$${cuenta.saldo}`,
+                        fecha: new Date().toLocaleString(),
+                    });
+                }
+            })}
     } else {
         // Si la cuenta no existe
         alert("La cuenta ingresada no está registrada.");
@@ -103,4 +112,60 @@ function retirar() {
     }
 }
 
-retirar();
+
+function movimientosCuentas() {
+    let numeroCuenta = prompt("Digite el número de su cuenta:");
+    let clave = prompt("Digite la contraseña de su cuenta:");
+
+    // Buscar la cuenta por número y clave
+    let cuenta = cuentas.find(c => c.cta === numeroCuenta && c.clave === clave);
+
+    if (cuenta) {
+        // Buscar movimientos relacionados con la cuenta encontrada
+        let movimientosCuenta = movimientos.find(m => m.cta === cuenta.cta);
+
+        if (movimientosCuenta && movimientosCuenta.movimientos.length > 0) {
+            alert(`Movimientos de la cuenta ${numeroCuenta}:\n` + movimientosCuenta.movimientos.join("\n"));
+        } else {
+            alert(`No se encontraron movimientos para la cuenta ${numeroCuenta}.`);
+        }
+    } else {
+        alert("Código incorrecto");
+    }
+}
+
+menu();
+
+switch (eleccion) {
+    case '1':
+        console.log("Has elegido crear una cuenta.");
+        crearCuenta();
+        // Llama a la función para crear una cuenta
+        break;
+    case "2":
+        console.log("Has elegido consignar en la cuenta.");
+        consignar();
+        // Llama a la función para consignar
+        break;
+    case '3':
+        console.log("Has elegido retirar dinero.");
+        retirar();
+        // Llama a la función para retirar dinero
+        break;
+    case '4':
+        console.log("Has elegido pagar servicios.");
+        // Llama a la función para pagar servicios
+        break;
+    case '5':
+        console.log("Has elegido mostrar movimientos.");
+        movimientosCuentas();
+        // Llama a la función para mostrar movimientos
+        break;
+    case '6':
+        console.log("Gracias por utilizar el sistema bancario. ¡Hasta luego!");
+        // Salir del programa
+        break;
+    default:
+        console.log("Opción no válida. Por favor, ingresa un número del 1 al 6.");
+        break;
+}
