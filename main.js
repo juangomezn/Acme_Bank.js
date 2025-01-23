@@ -16,12 +16,53 @@ let eleccion = prompt(`
         5. Mostrar movimientos              
         6. Salir
         
-        Ingrese el numero de la opcion que desea realizar: 
-        `);}
+        Ingrese el numero de la opcion que desea realizar:
+        ` );
+        
+        switch (eleccion) {
+            case '1':
+                console.log("Has elegido crear una cuenta.");
+                //Llamada funcion crear cuenta
+                crearCuenta();
+                //Llamada del menu para continuar usando el programa
+                menu();
+            case "2":
+                console.log("Has elegido consignar en la cuenta.");
+                //Llamada de la funcion consignar
+                consignar();
+                //Llamada del menu para continuar usando el programa
+                menu();
+            case '3':
+                console.log("Has elegido retirar dinero.");
+                //Llamada de la funcion retirar
+                retirar();
+                //Llamada del menu para continuar usando el programa
+                menu();
+            case '4':
+                console.log("Has elegido pagar servicios.");
+                //Llamada del menu para continuar usando el programa
+                menu();
+            case '5':
+                console.log("Has elegido mostrar movimientos.");
+                //Llamada de la funcion que muestra los movimientos de las cuentas
+                movimientosCuentas();
+                //Llamada del menu para continuar usando el sistema
+                menu();
+            case '6':
+                console.log("Gracias por utilizar el sistema bancario. ¡Hasta luego!");
+                break;
+            default:
+                console.log("Opción no válida. Por favor, ingresa un número del 1 al 6.");
+                menu();
+        }
+    }
+
+menu();
 
 function crearCuenta(){
+    //Contador de cuentas que aumenta en 1 cada vez que se crea una cuenta y asi asigna este numero a cada cuenta
     let cta = cuentas.length + 1;
-
+    
     let id = prompt("Ingrese su numero de identificacion: ");
     let nombre = prompt("Ingrese su nombre: ");
     let clave = prompt("Ingrese su clave: ");
@@ -52,7 +93,7 @@ function consignar() {
     let numeroCuenta = prompt("Ingrese el número de la cuenta a la que desea consignar:");
 
     // Buscar la cuenta en el arreglo
-    let cuenta = cuentas.find(c => c.cc === numeroCuenta);
+    let cuenta = cuentas.find(c => c.cta === numeroCuenta);
 
     if (cuenta) {
         // Mensaje indicando que la cuenta está creada
@@ -89,7 +130,7 @@ function retirar() {
     let numeroCuenta = prompt("Ingrese el número de la cuenta a la que desea retirar:");
 
     // Buscar la cuenta en el arreglo
-    let cuenta = cuentas.find(c => c.cc === numeroCuenta);
+    let cuenta = cuentas.find(c => c.cta === numeroCuenta);
 
     if (cuenta) {
         // Mensaje indicando que la cuenta está creada
@@ -132,40 +173,4 @@ function movimientosCuentas() {
     } else {
         alert("Código incorrecto");
     }
-}
-
-menu();
-
-switch (eleccion) {
-    case '1':
-        console.log("Has elegido crear una cuenta.");
-        crearCuenta();
-        // Llama a la función para crear una cuenta
-        break;
-    case "2":
-        console.log("Has elegido consignar en la cuenta.");
-        consignar();
-        // Llama a la función para consignar
-        break;
-    case '3':
-        console.log("Has elegido retirar dinero.");
-        retirar();
-        // Llama a la función para retirar dinero
-        break;
-    case '4':
-        console.log("Has elegido pagar servicios.");
-        // Llama a la función para pagar servicios
-        break;
-    case '5':
-        console.log("Has elegido mostrar movimientos.");
-        movimientosCuentas();
-        // Llama a la función para mostrar movimientos
-        break;
-    case '6':
-        console.log("Gracias por utilizar el sistema bancario. ¡Hasta luego!");
-        // Salir del programa
-        break;
-    default:
-        console.log("Opción no válida. Por favor, ingresa un número del 1 al 6.");
-        break;
 }
